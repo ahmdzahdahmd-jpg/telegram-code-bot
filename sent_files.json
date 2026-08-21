@@ -1,1 +1,12 @@
-[]
+[
+  "ciphers/elgamal_key_generator.py",
+  "ciphers/trifid_cipher.py",
+  "computer_vision/flip_augmentation.py",
+  "linear_algebra/src/rank_of_matrix.py",
+  "maths/chinese_remainder_theorem.py",
+  "neural_network/activation_functions/leaky_rectified_linear_unit.py",
+  "other/magicdiamondpattern.py",
+  "physics/newtons_law_of_gravitation.py",
+  "project_euler/problem_042/solution42.py",
+  "searches/simple_binary_search.py"
+]
