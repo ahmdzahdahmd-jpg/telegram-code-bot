@@ -1,0 +1,36 @@
+name: نشر أكواد بايثون يومية على تيليجرام
+
+on:
+  schedule:
+    # يشتغل الساعة 9 صباح بتوقيت السعودية (UTC+3) => الساعة 6 صباحًا UTC
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}  # يخليك تشغله يدويًا من تبويب Actions للتجربة
+
+jobs:
+  post-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: python bot.py
+
+      - name: Commit updated state file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add sent_files.json
+          git diff --quiet --cached || git commit -m "تحديث سجل الأكواد المرسلة"
+          git push
